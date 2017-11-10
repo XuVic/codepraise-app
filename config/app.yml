@@ -1,0 +1,5 @@
+---
+development:
+  api_url: http://localhost:3000/api/v0.1
+test:
+  api_url: https://localhost:3000/api/v0.1
