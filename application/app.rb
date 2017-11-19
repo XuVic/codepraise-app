@@ -19,29 +19,26 @@ module CodePraise
       # GET / request
       routing.root do
         repos_json = ApiGateway.new.all_repos
-        all_repos = CodePraise::ReposRepresenter.new(OpenStruct.new)
-                                                .from_json repos_json
-        if all_repos.repos.count == 0
+        all_repos = ReposRepresenter.new(OpenStruct.new).from_json repos_json
+        projects = Views::AllProjects.new(all_repos)
+        if projects.none?
           flash.now[:notice] = 'Add a Github project to get started'
         end
 
-        view 'home', locals: { repos: all_repos.repos }
+        view 'home', locals: { projects: projects }
       end
 
       routing.on 'repo' do
         routing.post do
           create_request = Forms::UrlRequest.call(routing.params)
-          if create_request.success?
-            ownername, reponame = create_request[:url].split('/')[-2..-1]
-            begin
-              ApiGateway.new.create_repo(ownername, reponame)
-              flash[:notice] = 'New Github project added!'
-            rescue StandardError => error
-              flash[:error] = error.to_s
-            end
+          result = AddProject.new.call(create_request)
+
+          if result.success?
+            flash[:notice] = 'New project added!'
           else
-            flash[:error] = create_request.errors.values.join('; ')
+            flash[:error] = result.value
           end
+
           routing.redirect '/'
         end
       end

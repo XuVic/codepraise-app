@@ -16,26 +16,26 @@
           } + Add Repo
     .row
       .col-xs-12.blank-row
-  table class="table" id="repos_table"
-    thead
-      tr
-        th Owner
-        th Github URL
-        th Git Repo
-        th Contributors
-    tbody
-      - repos.each.with_index do |repo, index|
-        tr class="repo_row" id="repo[#{index}].row"
-          td id='td_owner'
-            span class="repo_table_owner" id="repo[#{index}].owner"
-              = repo.owner.username
-          td id='td_repo_name'
-            span class="repo_name" id="repo[#{index}].name"
-              a href="/repo/#{repo.owner.username}/#{repo.name}" id="repo[#{index}].link" #{repo.name}
-          td id='td_link'
-            span class="repo_gh_url" id="repo[#{index}].gh_url"
-              - github_url = ['https://github.com/', repo.owner.username, repo.name].join '/'
-              a href="#{github_url}" target="_blank" #{github_url}
-          td id='td_contributors'
-            span class="repo_table_contributor" id="repo[#{index}].contributors"
-              = repo.contributors.map(&:username).join(', ')
+  - if projects.any?
+    table class="table" id="repos_table"
+      thead
+        tr
+          th Owner
+          th Github URL
+          th Git Repo
+          th Contributors
+      tbody
+        - projects.collection.each.with_index do |project, index|
+          tr class="repo_row" id="repo[#{index}].row"
+            td id='td_owner'
+              span class="repo_table_owner" id="repo[#{index}].owner"
+                = project.owner
+            td id='td_repo_name'
+              span class="repo_name" id="repo[#{index}].name"
+                a href=project.link_to_repo id="repo[#{index}].link" #{project.name}
+            td id='td_link'
+              span class="repo_gh_url" id="repo[#{index}].gh_url"
+                a href=project.github_href target="_blank" #{project.github_href}
+            td id='td_contributors'
+              span class="repo_table_contributor" id="repo[#{index}].contributors"
+                = project.contributors

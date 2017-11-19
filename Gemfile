@@ -13,7 +13,6 @@ gem 'rake' # to run console in production
 # Web related
 gem 'econfig'
 gem 'puma'
-gem 'rack-flash3'
 gem 'roda'
 gem 'slim'
 
@@ -21,6 +20,10 @@ gem 'slim'
 gem 'dry-validation'
 gem 'multi_json'
 gem 'roar'
+
+# Services
+gem 'dry-monads'
+gem 'dry-transaction'
 
 group :test do
   gem 'minitest'
