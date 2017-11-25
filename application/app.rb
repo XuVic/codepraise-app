@@ -29,17 +29,31 @@ module CodePraise
       end
 
       routing.on 'repo' do
-        routing.post do
-          create_request = Forms::UrlRequest.call(routing.params)
-          result = AddProject.new.call(create_request)
+        routing.is do
+          routing.post do
+            create_request = Forms::UrlRequest.call(routing.params)
+            result = AddProject.new.call(create_request)
 
-          if result.success?
-            flash[:notice] = 'New project added!'
-          else
-            flash[:error] = result.value
+            if result.success?
+              flash[:notice] = 'New project added!'
+            else
+              flash[:error] = result.value
+            end
+
+            routing.redirect '/'
           end
+        end
 
-          routing.redirect '/'
+        routing.on String, String do |ownername, reponame|
+          routing.get do
+            path = request.remaining_path
+            foldername = path.empty? ? '' : path[1..-1]
+            summary_json = ApiGateway.new.folder_summary(ownername, reponame, foldername)
+            summary = FolderSummaryRepresenter.new(OpenStruct.new).from_json summary_json
+            folder_summary = Views::FolderSummaryView.new(summary, request.path)
+
+            view 'folder_summary', locals: { folder: folder_summary }
+          end
         end
       end
     end
