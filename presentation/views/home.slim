@@ -34,8 +34,8 @@
               span class="repo_name" id="repo[#{index}].name"
                 a href=project.link_to_repo id="repo[#{index}].link" #{project.name}
             td id='td_link'
-              span class="repo_gh_url" id="repo[#{index}].gh_url"
-                a href=project.github_href target="_blank" #{project.github_href}
+              span class="repo_gh_url" id="repo[#{index}].gh_url_span"
+                a href=project.github_href id="repo[#{index}].gh_url" target="_blank" #{project.github_href}
             td id='td_contributors'
               span class="repo_table_contributor" id="repo[#{index}].contributors"
                 = project.contributors

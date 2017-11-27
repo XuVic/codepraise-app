@@ -16,6 +16,9 @@ GEM
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.0.5)
+    data_magic (1.2)
+      faker (>= 1.1.2)
+      yml_reader (>= 0.6)
     declarative (0.0.10)
     declarative-option (0.1.0)
     descendants_tracker (0.0.4)
@@ -60,6 +63,8 @@ GEM
       dry-types (~> 0.12.0)
     econfig (2.0.0)
     equalizer (0.0.11)
+    faker (1.8.4)
+      i18n (~> 0.5)
     ffi (1.9.18)
     flog (4.6.1)
       path_expander (~> 1.0)
@@ -75,6 +80,8 @@ GEM
       domain_name (~> 0.5)
     http-form_data (1.0.3)
     http_parser.rb (0.6.0)
+    i18n (0.9.1)
+      concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     inflecto (0.0.2)
     listen (3.1.5)
@@ -86,6 +93,12 @@ GEM
     minitest-rg (5.2.0)
       minitest (~> 5.0)
     multi_json (1.12.2)
+    page-object (2.2.4)
+      page_navigation (>= 0.10)
+      selenium-webdriver (~> 3.0)
+      watir (~> 6.8)
+    page_navigation (0.10)
+      data_magic (>= 0.22)
     parallel (1.12.0)
     parser (2.4.0.0)
       ast (~> 2.2)
@@ -97,8 +110,6 @@ GEM
     public_suffix (3.0.0)
     puma (3.10.0)
     rack (2.0.3)
-    rack-flash3 (1.0.5)
-      rack
     rack-test (0.7.0)
       rack (>= 1.0, < 3)
     rainbow (2.2.2)
@@ -156,6 +167,7 @@ GEM
     watir (6.8.4)
       selenium-webdriver (~> 3.4, >= 3.4.1)
     wisper (2.0.0)
+    yml_reader (0.7)
 
 PLATFORMS
   ruby
@@ -171,9 +183,9 @@ DEPENDENCIES
   minitest
   minitest-rg
   multi_json
+  page-object
   pry
   puma
-  rack-flash3
   rack-test
   rake
   reek

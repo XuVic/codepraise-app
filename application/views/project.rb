@@ -21,7 +21,7 @@ module CodePraise
       end
 
       def github_href
-        @github_ref ||= ['https://github.com/', owner, name].join '/'
+        @github_ref ||= ['https://github.com', owner, name].join '/'
       end
 
       def contributors
