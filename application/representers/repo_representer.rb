@@ -11,6 +11,7 @@ module CodePraise
     property :owner, extend: CollaboratorRepresenter, class: OpenStruct
     property :name
     property :git_url
+    property :size
     collection :contributors, extend: CollaboratorRepresenter, class: OpenStruct
   end
 end

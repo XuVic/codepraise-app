@@ -18,7 +18,7 @@ module CodePraise
 
       # GET / request
       routing.root do
-        repos_json = ApiGateway.new.all_repos
+        repos_json = ApiGateway.new.all_repos.message
         all_repos = ReposRepresenter.new(OpenStruct.new).from_json repos_json
         projects = Views::AllProjects.new(all_repos)
         if projects.none?
@@ -48,11 +48,17 @@ module CodePraise
           routing.get do
             path = request.remaining_path
             foldername = path.empty? ? '' : path[1..-1]
-            summary_json = ApiGateway.new.folder_summary(ownername, reponame, foldername)
-            summary = FolderSummaryRepresenter.new(OpenStruct.new).from_json summary_json
-            folder_summary = Views::FolderSummaryView.new(summary, request.path)
+            result = ApiGateway.new.folder_summary(ownername, reponame, foldername)
+            view_info = { result: result, name: path }
+            if result.processing?
+              flash.now[:notice] = 'Repo being cloned, please check back in a moment'
+            else
+              summary = FolderSummaryRepresenter.new(OpenStruct.new).from_json result.message
+              folder_summary = Views::FolderSummaryView.new(summary, request.path)
+              view_info[:folder] = folder_summary
+            end
 
-            view 'folder_summary', locals: { folder: folder_summary }
+            view 'folder_summary', locals: view_info
           end
         end
       end

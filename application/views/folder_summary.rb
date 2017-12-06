@@ -65,15 +65,15 @@ module CodePraise
       end
     end
 
+    # USAGE:
+    # app.reload!
+    # cd CodePraise
+    # json = ApiGateway.new.folder_summary('soumyaray', 'YPBT-app', '').message
+    # summary = FolderSummaryRepresenter.new(OpenStruct.new).from_json json
+    # s = Views::FolderSummaryView.new(summary)
+    # s.contributors
+    # s.subfolders.first
     class FolderSummaryView
-      # app.reload!
-      # cd CodePraise
-      # json = ApiGateway.new.folder_summary('soumyaray', 'YPBT-app', '')
-      # summary = FolderSummaryRepresenter.new(OpenStruct.new).from_json json
-
-      # s = Views::FolderSummaryView.new(summary)
-      # s.contributors
-      # s.subfolders.first
       def initialize(summary, request_path)
         @summary = summary
         @request_path = request_path

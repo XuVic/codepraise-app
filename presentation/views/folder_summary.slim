@@ -1,36 +1,37 @@
 .container
 
 h2
-  = "Folder: /#{folder.name}"
-table class="table" id="repos_table"
-  thead
-    tr
-      th 
-      - folder.contributors.each do |contributor|
-        th #{contributor.name}
-  tbody
-    - folder.subfolders.each do |sub, index|
+  = "Folder: /#{name}"
+- if result.ok?
+  table class="table" id="repos_table"
+    thead
+      tr
+        th 
+        - folder.contributors.each do |contributor|
+          th #{contributor.name}
+    tbody
+      - folder.subfolders.each do |sub, index|
+        tr
+          td
+            a href=sub.link
+              span #{sub.name}/
+          - folder.contributors.each do |contributor|
+            td
+              span #{sub.contributions[contributor]}
+      tr
+        - (folder.contributors.count+1).times do
+          td
       tr
         td
-          a href=sub.link
-            span #{sub.name}/
+          span files
         - folder.contributors.each do |contributor|
           td
-            span #{sub.contributions[contributor]}
-    tr
-      - (folder.contributors.count+1).times do
-        td
-    tr
-      td
-        span files
-      - folder.contributors.each do |contributor|
-        td
-          span #{folder.base_folder.contributions[contributor]}
-    - folder.base_files.each do |sub, index|
-      tr
-        td
-          span #{sub.name}
-        - folder.contributors.each do |contributor|
+            span #{folder.base_folder.contributions[contributor]}
+      - folder.base_files.each do |sub, index|
+        tr
           td
-            span #{sub.contributions[contributor]}
-        
+            span #{sub.name}
+          - folder.contributors.each do |contributor|
+            td
+              span #{sub.contributions[contributor]}
+          
