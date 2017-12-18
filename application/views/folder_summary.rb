@@ -74,9 +74,9 @@ module CodePraise
     # s.contributors
     # s.subfolders.first
     class FolderSummaryView
-      def initialize(summary, request_path)
+      def initialize(summary, request)
         @summary = summary
-        @request_path = request_path
+        @request_path = request.path
       end
 
       def name

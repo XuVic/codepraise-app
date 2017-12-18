@@ -3,6 +3,7 @@
 require 'roda'
 require 'slim'
 require 'slim/include'
+require_relative 'route_helpers'
 
 module CodePraise
   # Web App
@@ -46,15 +47,15 @@ module CodePraise
 
         routing.on String, String do |ownername, reponame|
           routing.get do
-            path = request.remaining_path
-            foldername = path.empty? ? '' : path[1..-1]
-            result = ApiGateway.new.folder_summary(ownername, reponame, foldername)
-            view_info = { result: result, name: path }
+            result = ApiGateway.new.folder_summary(ownername, reponame,
+                                                   folder_name_from(request))
+            view_info = { result: result }
             if result.processing?
-              flash.now[:notice] = 'Repo being cloned, please check back in a moment'
+              view_info[:processing] = Views::ProcessingView.new(result)
+              flash.now[:notice] = 'Repo being processed'
             else
               summary = FolderSummaryRepresenter.new(OpenStruct.new).from_json result.message
-              folder_summary = Views::FolderSummaryView.new(summary, request.path)
+              folder_summary = Views::FolderSummaryView.new(summary, request)
               view_info[:folder] = folder_summary
             end
 
