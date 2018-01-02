@@ -6,3 +6,7 @@ test:
   API_HOST: http://localhost:3000 
   API_VER: api/v0.1
   APP_URL: http://localhost:9000
+production:
+  API_HOST: https://codepraise-api.herokuapp.com
+  API_VER: api/v0.1
+  APP_URL: https://codepraise.herokuapp.com
